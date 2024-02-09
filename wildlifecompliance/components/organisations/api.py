@@ -13,6 +13,8 @@ from django.contrib import messages
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
+from django.db.models import Value
+from django.db.models.functions import Concat
 from rest_framework import viewsets, serializers, status, generics, views
 from rest_framework.decorators import detail_route, list_route, renderer_classes
 from rest_framework.response import Response
@@ -94,6 +96,10 @@ class OrganisationFilterBackend(DatatablesFilterBackend):
 
         total_count = queryset.count()
         search_text = request.GET.get('search[value]')
+        organisation_name = request.GET.get('organisation')
+        applicant = request.GET.get('applicant')
+        role = request.GET.get('role')
+        status = request.GET.get('status')
 
         if queryset.model is Organisation:
             # search_text filter, join all custom search columns
@@ -116,12 +122,34 @@ class OrganisationFilterBackend(DatatablesFilterBackend):
                 search_text = search_text.lower()
                 # join queries for the search_text search
                 search_text_org_request_ids = []
+                search_text_org_request_ids = OrganisationRequest.objects.filter(
+                Q(requester__first_name__icontains=search_text) |
+                Q(requester__last_name__icontains=search_text) |
+                Q(assigned_officer__first_name__icontains=search_text) |
+                Q(assigned_officer__last_name__icontains=search_text)
+                ).values('id')
                 # for organisation_request in queryset:
                 #     if search_text in organisation_request.address_string.lower():
                 #         search_text_org_request_ids.append(organisation_request.id)
                 # use pipe to join both custom and built-in DRF datatables querysets (returned by super call above)
                 # (otherwise they will filter on top of each other)
                 queryset = queryset.filter(id__in=search_text_org_request_ids).distinct() | super_queryset
+
+            # apply user selected filters
+            organisation_name = organisation_name.lower() if organisation_name else 'all'
+            if organisation_name != 'all':
+                queryset = queryset.filter(name__iexact=organisation_name)
+            applicant = applicant.lower() if applicant else 'all'
+            if applicant != 'all':
+                queryset = queryset.annotate(applicant_name=Concat('requester__first_name',
+                    Value(' '),'requester__last_name')).filter(applicant_name__iexact=applicant)
+            role = role.lower() if role else 'all'
+            if role != 'all':
+                queryset = queryset.filter(role__iexact=role)
+            #TODO work this one out
+            status = status.lower() if status else 'all'
+            if status != 'all':
+                queryset = queryset.filter(status__iexact=status)
 
         # override queryset ordering, required because the ordering is usually handled
         # in the super call, but is then clobbered by the custom queryset joining above

@@ -79,6 +79,12 @@ export default {
                 ajax: {
                     "url": helpers.add_endpoint_join(api_endpoints.organisation_requests_paginated,'datatable_list/?format=datatables'),
                     "dataSrc": 'data',
+                    "data": function (d) {
+                        d.organisation = vm.filterOrganisation,
+                        d.applicant = vm.filterApplicant,
+                        d.role = vm.filterRole,
+                        d.status = vm.filterStatus
+                    },
                 },
                 columns:[
                     {
@@ -89,12 +95,15 @@ export default {
                     },
                     {
                         data:"requester",
+                        searchable: false,
                     },
                     {
                         data:"role",
+                        searchable: false,
                     },
                     {
                         data:"status.name",
+                        searchable: false,
                     },
                     {
                         data:"lodgement_date",
@@ -104,6 +113,7 @@ export default {
                     },
                     {
                         data:"assigned_officer",
+                        searchable: false,
                     },
                     {
                         data:"id",

@@ -94,11 +94,14 @@ class LicenceFilterBackend(DatatablesFilterBackend):
             # apply user selected filters
             category_name = category_name.lower() if category_name else 'all'
             if category_name != 'all':
-                category_name_licence_ids = []
-                for wildlifelicence in queryset:
-                    if category_name in wildlifelicence.current_application.licence_category_name.lower():
-                        category_name_licence_ids.append(wildlifelicence.id)
-                queryset = queryset.filter(id__in=category_name_licence_ids)
+                #category_name_licence_ids = []
+                #for wildlifelicence in queryset:
+                #    if category_name in wildlifelicence.current_application.licence_category_name.lower():
+                #        category_name_licence_ids.append(wildlifelicence.id)
+                #queryset = queryset.filter(id__in=category_name_licence_ids)
+                queryset = queryset.filter(licence_category__name__iexact=category_name)
+
+            #TODO this filter does not work
             if date_from:
                 date_from_licence_ids = []
                 for wildlifelicence in queryset:
@@ -116,6 +119,8 @@ class LicenceFilterBackend(DatatablesFilterBackend):
                         date_from_licence_ids.append(wildlifelicence.id)
 
                 queryset = queryset.filter(id__in=date_from_licence_ids)
+                
+            #TODO this filter does not work
             if date_to:
                 date_to_licence_ids = []
                 for wildlifelicence in queryset:
@@ -136,11 +141,32 @@ class LicenceFilterBackend(DatatablesFilterBackend):
                 queryset = queryset.filter(id__in=date_to_licence_ids)
             holder = holder.lower() if holder else 'all'
             if holder != 'all':
-                holder_licence_ids = []
-                for wildlifelicence in queryset:
-                    if holder in wildlifelicence.current_application.applicant.lower():
-                        holder_licence_ids.append(wildlifelicence.id)
-                queryset = queryset.filter(id__in=holder_licence_ids)
+                #holder_licence_ids = []
+                #for wildlifelicence in queryset:
+                #    if holder in wildlifelicence.current_application.applicant.lower():
+                #        holder_licence_ids.append(wildlifelicence.id)
+                #queryset = queryset.filter(id__in=holder_licence_ids)
+                queryset = queryset.annotate(
+                    applicant_name=Case(
+                        When(
+                            current_application__proxy_applicant__isnull=False,
+                            then=Concat(
+                                'current_application__proxy_applicant__first_name',
+                                Value(' '),
+                                'current_application__proxy_applicant__last_name',
+                                Value(''),
+                            )
+                        ),
+                        default=Concat(
+                            'current_application__submitter__first_name',
+                            Value(' '),
+                            'current_application__submitter__last_name',
+                            Value(''),
+                        ),
+                        output_field=CharField(),
+                    )
+                ).filter(Q(applicant_name__iexact=holder)
+                |Q(current_application__org_applicant__organisation__name__iexact=holder))
 
         # override queryset ordering, required because the ordering is usually handled
         # in the super call, but is then clobbered by the custom queryset joining above
