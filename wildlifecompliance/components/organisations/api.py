@@ -146,8 +146,8 @@ class OrganisationFilterBackend(DatatablesFilterBackend):
             role = role.lower() if role else 'all'
             if role != 'all':
                 queryset = queryset.filter(role__iexact=role)
-            #TODO work this one out
-            status = status.lower() if status else 'all'
+            
+            status = status.lower().replace(" ","_") if status else 'all'
             if status != 'all':
                 queryset = queryset.filter(status__iexact=status)
 
