@@ -22,8 +22,8 @@ import 'select2';
 import "sweetalert2/dist/sweetalert2.css";
 import 'jquery-validation';
 
-import 'datatables.net-buttons-bs';
-import 'datatables.net-responsive-bs';
+import 'datatables.net-buttons-bs5';
+import 'datatables.net-responsive-bs5';
 
 import 'select2-bootstrap-theme/dist/select2-bootstrap.min.css';
 import 'summernote/dist/summernote';
@@ -31,13 +31,13 @@ import 'summernote/dist/summernote.min.css';
 
 extendMoment(moment);
 
-require( '../node_modules/bootstrap/dist/css/bootstrap.css' );
+//require( '../node_modules/bootstrap/dist/css/bootstrap.css' );
 //require('../node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css')
 require( '../node_modules/font-awesome/css/font-awesome.min.css' );
 
-import '@/../node_modules/datatables.net-bs/css/dataTables.bootstrap.min.css';
-import '@/../node_modules/datatables.net-responsive-bs/css/responsive.bootstrap.min.css';
-import '@/../node_modules/datatables.net-buttons-bs/css/buttons.bootstrap.min.css';
+import '@/../node_modules/datatables.net-bs5/css/dataTables.bootstrap5.min.css';
+import '@/../node_modules/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css';
+import '@/../node_modules/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css';
 
 //Vue.config.devtools = true;
 Vue.config.productionTip = false

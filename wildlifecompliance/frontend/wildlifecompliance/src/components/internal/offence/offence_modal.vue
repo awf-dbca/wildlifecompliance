@@ -242,7 +242,7 @@ import SearchPersonOrganisation from "@common-components/search_person_or_organi
 //import CreateNewPerson from "@common-components/create_new_person.vue";
 import utils from "../utils";
 import $ from "jquery";
-import "bootstrap/dist/css/bootstrap.css";
+//import "bootstrap/dist/css/bootstrap.css";
 import "awesomplete/awesomplete.css";
 import { v4 as uuidv4 } from 'uuid';
 import "jquery-ui/ui/widgets/draggable.js";

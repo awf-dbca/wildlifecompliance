@@ -50,7 +50,7 @@
 <script>
 import Awesomplete from "awesomplete";
 import $ from "jquery";
-import "bootstrap/dist/css/bootstrap.css";
+//import "bootstrap/dist/css/bootstrap.css";
 import "awesomplete/awesomplete.css";
 import updateCreatePerson from '@common-components/update_create_person.vue'
 import updateCreateOrganisation from '@common-components/update_create_organisation.vue'

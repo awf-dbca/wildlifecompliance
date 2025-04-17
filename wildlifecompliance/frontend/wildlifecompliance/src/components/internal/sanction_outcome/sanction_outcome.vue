@@ -477,7 +477,7 @@ import RecordFerCaseNumber from '@/components/internal/sanction_outcome/record_f
 import SendParkingInfringement from '@/components/internal/sanction_outcome/send_parking_infringement.vue';
 import AcceptRemediationAction from '@/components/internal/sanction_outcome/accept_remediation_action.vue';
 import RequestAmendmentRemediationAction from '@/components/internal/sanction_outcome/request_amendment_remediation_action.vue';
-import 'bootstrap/dist/css/bootstrap.css';
+//import 'bootstrap/dist/css/bootstrap.css';
 import hash from 'object-hash';
 import RelatedItems from "@common-components/related_items.vue";
 import RegistrationHolder from "@common-components/search_person_or_organisation.vue";

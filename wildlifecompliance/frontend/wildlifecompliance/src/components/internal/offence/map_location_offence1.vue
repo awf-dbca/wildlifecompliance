@@ -74,7 +74,7 @@ import Awesomplete from "awesomplete";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 import { guid } from "@/utils/helpers";
 import { api_endpoints, helpers, cache_helper } from '@/utils/hooks'
-import "bootstrap/dist/css/bootstrap.css";
+//import "bootstrap/dist/css/bootstrap.css";
 import "awesomplete/awesomplete.css";
 import "leaflet/dist/leaflet.css";
 import "leaflet-measure/dist/leaflet-measure.css";

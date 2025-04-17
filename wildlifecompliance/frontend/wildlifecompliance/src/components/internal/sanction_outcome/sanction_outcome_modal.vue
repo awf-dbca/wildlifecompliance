@@ -278,7 +278,7 @@ import { api_endpoints, helpers, cache_helper } from "@/utils/hooks";
 import utils from "../utils";
 import $ from "jquery";
 import "jquery-ui/ui/widgets/draggable.js";
-import "bootstrap/dist/css/bootstrap.css";
+//import "bootstrap/dist/css/bootstrap.css";
 import "awesomplete/awesomplete.css";
 
 export default {

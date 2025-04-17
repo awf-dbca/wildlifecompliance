@@ -30,7 +30,7 @@
 <script>
 import Awesomplete from "awesomplete";
 import $ from "jquery";
-import "bootstrap/dist/css/bootstrap.css";
+//import "bootstrap/dist/css/bootstrap.css";
 import "awesomplete/awesomplete.css";
 import { api_endpoints, helpers, cache_helper } from "@/utils/hooks";
 
